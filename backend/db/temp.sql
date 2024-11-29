@@ -29,3 +29,6 @@ CREATE TABLE RECIPE_INGREDIENT (
     FOREIGN KEY (recipeId) REFERENCES RECIPE(recipeId),
     PRIMARY KEY (recipeId, ingredient)
 );
+
+INSERT INTO ADMIN VALUES ("admin","b77ad2edf199a4b4479347afaf387d435a12480d0dc5b8e042c4c8991587d0808c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","admin@insa-rouen.fr");
+/* le mdp hashé est 'admin' */
