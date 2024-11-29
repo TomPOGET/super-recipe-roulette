@@ -11,7 +11,7 @@ router.use('/', function (req, res) {
                 res.render('menu.ejs', {menu: rows, logged: req.session.loggedin});
             }
         });*/
-        res.render('search.ejs');
+        res.render('search.ejs', {logged: req.session.loggedin});
 });
 
 

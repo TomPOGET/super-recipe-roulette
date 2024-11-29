@@ -11,14 +11,29 @@ app.use(express.urlencoded({ extended: true }));
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-//session pour tout le monde ou bien juste admin?
+// import  and use express-session module
+const session = require('express-session');
+app.use(session({
+	secret: 'login', //used to sign the session ID cookie
+	name: 'login', // (optional) name of the session cookie
+	resave: true, // forces the session to be saved back to the session store
+	saveUninitialized: true, // forces a session an uninitialized session to be saved to the store	
+}));
 
 
 // serve static files
 app.use(express.static('../frontend/public'));
 
+
+
+const login = require('./routers/login');
+app.use('/',login);
+
 const search = require('./routers/search');
 app.use('/search',search);
+
+const submit = require('./routers/submit');
+app.use('/submit',submit);
 
 const router = require('./routers/router');
 app.use('/', router);
