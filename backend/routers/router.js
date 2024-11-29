@@ -11,13 +11,13 @@ router.use('/index.html', function (req, res) {
 });
 
 router.use('/', function (req, res) {
-	res.render('index.ejs', {logged: req.session.loggedin});
+	res.render('index.ejs');
 });
 
 // 404
 router.use('*', function(req, res){
     res.status(404);
-	res.render('404.ejs', {logged: req.session.loggedin});
+	res.render('404.ejs');
 });
 
 module.exports = router;
