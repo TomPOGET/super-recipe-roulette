@@ -8,7 +8,7 @@ DROP TABLE RECIPE_INGREDIENT ;
 
 CREATE TABLE ADMIN (
     username VARCHAR(50) PRIMARY KEY,  
-    password VARCHAR(60),  -- Augmenté pour le mot de passe hashé
+    password VARCHAR(70),  -- Augmenté pour le mot de passe hashé
     email VARCHAR(40)
 );
 
