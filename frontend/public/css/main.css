@@ -657,3 +657,110 @@ h1, h3, h4, h5, h6 {
     padding: 10px;
   }
 }
+
+/* ==========================
+      Submit Page Styles
+========================== */
+/* Submission Container */
+.submission-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 20px;
+  flex: 1; /* Takes up available space */
+}
+
+/* Submission Card */
+.submission-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.95));
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 100%;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Submission Card Heading */
+.submission-card h2 {
+  margin-bottom: 30px;
+  margin-top: 0px;
+  font-family: 'Pacifico', cursive;
+  color: #ff6347;
+  font-size: 2em;
+  text-align: center;
+}
+
+/* Form Styles */
+.submission-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+/* Form Labels */
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Required Field Indicator */
+.required {
+  color: red;
+  margin-left: 2px;
+}
+
+/* Text Inputs and Textareas */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+  padding: 10px;
+  max-width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  font-family: 'Roboto', sans-serif;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Textarea Resize */
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Input Focus Effects */
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group input[type="file"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #1e90ff; /* DodgerBlue */
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.5); /* DodgerBlue shadow */
+  outline: none;
+}
+
+/* Submit Button */
+.submit-button {
+  padding: 12px;
+  background-color: #32cd32; /* LimeGreen */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #28a745; /* Darker LimeGreen */
+  transform: scale(1.02);
+}

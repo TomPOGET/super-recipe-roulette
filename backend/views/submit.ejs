@@ -7,7 +7,80 @@
   <!-- Navbar -->
   <%- include('partials/navbar.ejs') %>
 
-  formulaire submit (à completer)
+  <!-- Banner -->
+  <div class="banner">
+    <h1>Soumettez Votre Recette</h1>
+    <p>Partagez vos délicieuses créations culinaires avec notre communauté!</p>
+  </div>
+
+  <!-- Recipe Submission Form Container -->
+  <div class="submission-container">
+    <div class="submission-card">
+      <h2>Formulaire de Soumission</h2>
+      <form id="recipeForm" action="/submit-recipe" method="POST" enctype="multipart/form-data">
+        <!-- Recipe Title -->
+        <div class="form-group">
+          <label for="recipeTitle">Titre de la Recette<span class="required">*</span></label>
+          <input type="text" id="recipeTitle" name="recipeTitle" placeholder="Entrez le titre de la recette" required>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description<span class="required">*</span></label>
+          <textarea id="description" name="description" rows="4" placeholder="Décrivez brièvement la recette" required></textarea>
+        </div>
+
+        <!-- Ingredients -->
+        <div class="form-group">
+          <label for="ingredients">Ingrédients<span class="required">*</span></label>
+          <input type="text" id="ingredientInput" placeholder="Ajouter vos ingrédient séparés par des virgules: Ex. Fromage,Thon,...">
+        </div>
+
+        <!-- Preparation Steps -->
+        <div class="form-group">
+          <label for="preparation">Étapes de Préparation<span class="required">*</span></label>
+          <textarea id="preparation" name="preparation" rows="6" placeholder="Décrivez les étapes de préparation, un par ligne" required></textarea>
+        </div>
+
+        <!-- Cooking Time -->
+        <div class="form-group">
+          <label for="cookingTime">Temps de Cuisson (minutes)<span class="required">*</span></label>
+          <input type="number" id="cookingTime" name="cookingTime" min="1" placeholder="Ex. 30" required>
+        </div>
+
+        <!-- Serving Size -->
+        <div class="form-group">
+          <label for="servingSize">Nombre de Portions<span class="required">*</span></label>
+          <input type="number" id="servingSize" name="servingSize" min="1" placeholder="Ex. 4" required>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label for="category">Catégorie<span class="required">*</span></label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Choisissez une catégorie</option>
+            <option value="entrées">Entrées</option>
+            <option value="plats_principaux">Plats Principaux</option>
+            <option value="desserts">Desserts</option>
+            <option value="boissons">Boissons</option>
+            <option value="accompagnements">Accompagnements</option>
+            <option value="autres">Autres</option>
+          </select>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-group">
+          <label for="recipeImage">Image de la Recette<span class="required">*</span></label>
+          <input type="file" id="recipeImage" name="recipeImage" accept="image/*" required>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button type="submit" class="submit-button">Soumettre la Recette</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Pied de Page -->
   <%- include('partials/footer.ejs') %>
