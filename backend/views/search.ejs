@@ -7,9 +7,42 @@
   <!-- Navbar -->
   <%- include('partials/navbar.ejs') %>
 
-  search (à completer)
+  <!-- Banner -->
+  <div class="banner">
+    <h1>Recherchez Vos Recettes Préférées</h1>
+    <p>Trouvez la recette parfaite en un clin d'œil!</p>
+  </div>
 
-  <!-- Pied de Page -->
-  <%- include('partials/footer.ejs') %>
+  <!-- Page de Recherche -->
+  <div class="search-page">
+    <!-- Barre de Recherche -->
+    <form class="search-bar" action="/search-results" method="GET">
+      <input type="text" name="query" id="searchInput" placeholder="Rechercher une recette ou un ingrédient..." required>
+      <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+    </form>
+
+    <h2>Choissez votre recette</h2>
+    <!-- Résultats de la Recherche -->
+    <div class="results-container">
+
+      <% for (let i = 0; i < 12; i++) { %> 
+      <div class="recipe-card">
+        <img src="img/bg.avif" alt="Recipe Image">
+        <h3><a href="#" class="recipe-link">Nom de la recette</a></h3>
+        <div class="recipe-rating">
+          <i class="fas fa-star filled"></i>
+          <i class="fas fa-star filled"></i>
+          <i class="fas fa-star filled"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <span class="review-count">300 avis</span>
+        </div>
+      </div>
+    <% } %>
+    </div>
+  </div>
+<!-- Pied de Page -->
+<%- include('partials/footer.ejs') %>
+  
 </body>
 </html>
