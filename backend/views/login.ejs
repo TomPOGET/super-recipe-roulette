@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Super Recipe Roulette</title>
-  <!-- Font Awesome pour les icônes -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Importation de Google Fonts pour des polices élégantes -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Pacifico&family=Lato:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="css/main.css">
+  <%- include('partials/header.ejs') %>
 </head>
 <body>
   <!-- Navbar -->
-  <%- include('navbar.ejs') %>
+  <%- include('partials/navbar.ejs') %>
 
-  formulaire login (à completer)
+  <!-- Bannière -->
+  <div class="banner">
+    <h1>Bienvenue sur la Super Recipe Roulette</h1>
+    <p>Découvrez des recettes aléatoires selon vos préférences !</p>
+  </div>
+
+  <!-- Login Form Container -->
+  <div class="login-container">
+    <div class="login-card">
+      <h2>Connexion</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+        </div>
+        <button type="submit" class="login-button">Se connecter</button>
+        <!-- <p class="signup-link">Vous n'avez pas de compte? <a href="/signup">Inscrivez-vous</a></p> -->
+      </form>
+    </div>
+  </div>
 
 
   <!-- Pied de Page -->
-  <%- include('footer.ejs') %>
+  <%- include('partials/footer.ejs') %>
 
 </body>
 </html>
