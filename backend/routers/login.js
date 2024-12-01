@@ -46,13 +46,8 @@ router.post('/login', function (req, res, next) {
 
 
 router.use('/login', function (req, res) {
-	if (req.session.loggedin) {
-        // Si l'utilisateur est déjà connecté, le rediriger vers la page d'accueil
-        res.redirect('/');
-    } else {
-        // Afficher la page de connexion avec aucun message d'erreur
+
         res.render('login.ejs', { logged: req.session.loggedin, error: null });
-    }
 });
 
 router.use('/logout', function (req, res) {

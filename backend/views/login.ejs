@@ -16,6 +16,15 @@
   <!-- Login Form Container -->
   <div class="login-container">
     <div class="login-card">
+      <% if (logged){ %> 
+
+        <h2>Déconnexion</h2>
+      <form method="POST" action="/logout">
+        <button type="submit" class="login-button">Se déconnecter</button>
+      </form>
+
+      <% }else{ %>
+
       <h2>Connexion</h2>
       <form id="loginForm" method="POST" action="/login">
         <div class="input-group">
@@ -29,6 +38,8 @@
         <button type="submit" class="login-button">Se connecter</button>
         <!-- <p class="signup-link">Vous n'avez pas de compte? <a href="/signup">Inscrivez-vous</a></p> -->
       </form>
+
+      <% } %>
     </div>
   </div>
 
