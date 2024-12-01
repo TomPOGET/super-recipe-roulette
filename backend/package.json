@@ -17,6 +17,7 @@
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "nodemon": "^3.1.7",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "vue": "^3.5.13"
   }
 }
