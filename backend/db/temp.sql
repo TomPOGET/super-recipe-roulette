@@ -1,5 +1,5 @@
 /* Ce fichier contient les requêtes à executer pour créer la bd, afin de transformer le en format finale (.sqlite), appliquez la commande:
-    sqlite3 reciperoulette.sqlite < temp.sql
+    sqlite3 reciperoulette.sqlite < temp.sql   dans backend/db
 */
 
 DROP TABLE ADMIN ;
