@@ -16,19 +16,16 @@
   <!-- Page de Recherche -->
   <div class="search-page">
     <!-- Barre de Recherche -->
-    <form class="search-bar" action="/search-results" method="GET">
-      <input type="text" name="query" id="searchInput" placeholder="Rechercher une recette ou un ingrédient..." required>
-      <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
-    </form>
+    <%- include('partials/search.ejs') %>
 
     <h2>Choissez votre recette</h2>
     <!-- Résultats de la Recherche -->
     <div class="results-container">
 
-      <% for (let i = 0; i < 12; i++) { %> 
+      <% for (const recipe of recipes) { %> 
       <div class="recipe-card">
-        <img src="img/bg.avif" alt="Recipe Image">
-        <h3><a href="#" class="recipe-link">Nom de la recette</a></h3>
+        <img src="img/recipes/<%= recipe.recipeId %>.png" alt="Recipe Image">
+        <h3><a href="#" class="recipe-link"><%= recipe['name'] %></a></h3>
         <div class="recipe-rating">
           <i class="fas fa-star filled"></i>
           <i class="fas fa-star filled"></i>

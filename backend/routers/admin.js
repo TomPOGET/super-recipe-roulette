@@ -14,7 +14,7 @@ function isAuthenticated(req, res, next) {
 router.use(isAuthenticated);
 
 // Route pour afficher le tableau de bord administrateur
-router.get('/admin', (req, res) => {
+router.get('/', (req, res) => {
   res.render('admin'); // Ceci va rendre le fichier admin.ejs
 });
 
