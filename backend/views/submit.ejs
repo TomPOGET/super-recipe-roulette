@@ -35,10 +35,11 @@
         <div class="form-group" id="ingredients">
           <label for="ingredients">Ingrédients<span class="required">*</span></label>
 
-          <ingredient numero="1"></ingredient>
+          <ingredient v-for="n in ingredientsNumber" v-bind:numero="n"></ingredient>
             
+          <button v-on:click="addIngredient()">Ajouter un autre ingrédient</button>
         </div>
-            <button>Ajouter un autre ingrédient</button>
+            
 
         <!-- Preparation Steps -->
         <div class="form-group">
@@ -84,16 +85,16 @@
   <script>
 
     Vue.component("ingredient",{
-        template:`<div id="ingredient{{numero}}" style="white-space: nowrap;">
+        template:`<div :id="'ingredient' + numero" style="white-space: nowrap;">
 
-              <label for="ingredientName{{numero}}" >Nom :</label>
-              <input type="text" id="ingredientName1" placeholder="Fromage" style="width: 170px;">
+              <label :for="'ingredientName' + numero" >Nom :</label>
+              <input type="text" :id="'ingredientName' + numero" placeholder="Fromage" style="width: 170px;">
 
-              <label for="ingredientQuantity{{numero}}">Quantité :</label>
-              <input type="text" id="ingredientQuantity1" placeholder="100" style="width: 70px;">
+              <label :for="'ingredientQuantity' + numero">Quantité :</label>
+              <input type="text" :id="'ingredientQuantity' + numero" placeholder="100" style="width: 70px;">
 
-              <label for="ingredientUnity{{numero}}">Unité :</label>
-              <input type="text" id="ingredientUnity{{numero}}" placeholder="ml" style="width: 115px;">
+              <label :for="'ingredientUnity' + numero">Unité :</label>
+              <input type="text" :id="'ingredientUnity' + numero" placeholder="ml" style="width: 115px;">
             
             </div>`,
         props:['numero']
@@ -105,7 +106,14 @@
 
         el:"#ingredients",
         data:{ 
-            ingredientNumber:1
+            ingredientsNumber:1
+        },
+        methods:{
+          addIngredient:function(){
+            console.log("le boutton est cliqué");
+            this.ingredientsNumber ++;
+            console.log(this.ingredientsNumber);
+          }
         }
 
     })
