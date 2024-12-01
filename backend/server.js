@@ -24,7 +24,11 @@ app.use(session({
 // serve static files
 app.use(express.static('../frontend/public'));
 
-
+// Middleware pour définir res.locals.logged
+app.use((req, res, next) => {
+	res.locals.logged = req.session.loggedin || false;
+	next();
+  });
 
 const login = require('./routers/login');
 app.use('/',login);
@@ -34,6 +38,9 @@ app.use('/search',search);
 
 const submit = require('./routers/submit');
 app.use('/submit',submit);
+
+const admin = require('./routers/admin');
+app.use('/', admin);
 
 const router = require('./routers/router');
 app.use('/', router);

@@ -957,3 +957,248 @@ h1, h3, h4, h5, h6 {
     font-size: 0.95em;
   }
 }
+
+/* Styles du Tableau de Bord Administrateur */
+
+.admin-dashboard {
+  padding: 20px 40px;
+  background-color: rgba(255, 255, 255, 0.95);
+  flex: 1;
+}
+
+.admin-dashboard h1 {
+  text-align: center;
+  font-size: 2.5em;
+  color: #ff6347;
+  font-family: 'Pacifico', cursive;
+  margin-bottom: 30px;
+}
+
+/* Onglets de Navigation */
+.admin-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.tab-button {
+  background-color: #ffe4e1;
+  color: #ff6347;
+  border: none;
+  padding: 15px 30px;
+  cursor: pointer;
+  font-size: 1.1em;
+  margin: 0 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.tab-button.active,
+.tab-button:hover {
+  background-color: #ff6347;
+  color: white;
+}
+
+/* Contenu des Onglets */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Liste des Recettes */
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Carte de Recette */
+.recipe-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.recipe-card h3 {
+  margin-top: 0;
+  color: #ff6347;
+}
+
+.recipe-card p {
+  color: #333;
+}
+
+/* Actions Admin */
+.admin-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.admin-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.approve-button {
+  background-color: #28a745;
+}
+
+.approve-button:hover {
+  background-color: #218838;
+}
+
+.reject-button {
+  background-color: #dc3545;
+}
+
+.reject-button:hover {
+  background-color: #c82333;
+}
+
+.edit-button {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.edit-button:hover {
+  background-color: #e0a800;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Carte de Soumission */
+.submission-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.submission-card h2 {
+  margin-bottom: 25px;
+  font-family: 'Pacifico', cursive;
+  color: #ff6f61;
+  font-size: 2em;
+  text-align: center;
+}
+
+/* Styles du Formulaire */
+.submission-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Groupe de Formulaire */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+/* Labels du Formulaire */
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Indicateur de Champ Obligatoire */
+.required {
+  color: red;
+  margin-left: 2px;
+}
+
+/* Champs de Texte et Textareas */
+.form-group input[type="text"],
+.form-group textarea {
+  padding: 10px;
+  max-width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  font-family: 'Roboto', sans-serif;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Redimensionnement du Textarea */
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Effets de Focus */
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+  border-color: #1e90ff;
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+  outline: none;
+}
+
+/* Bouton de Soumission */
+.submit-button {
+  padding: 12px;
+  background-color: #32cd32;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #28a745;
+  transform: scale(1.02);
+}
+
+/* Design Responsive */
+@media (max-width: 768px) {
+  .admin-tabs {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tab-button {
+    margin: 10px 0;
+    width: 80%;
+  }
+
+  .recipe-card {
+    padding: 15px;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+  }
+
+  .admin-actions button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .submission-card {
+    padding: 15px;
+  }
+
+  .submission-card h2 {
+    font-size: 1.8em;
+  }
+}
