@@ -27,6 +27,9 @@
 
       <h2>Connexion</h2>
       <form id="loginForm" method="POST" action="/login">
+        <% if (error!=undefined && error) {%>
+          <p>Wrong credentials, try again!</p>
+        <% }%>
         <div class="input-group">
           <i class="fas fa-user"></i>
           <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
