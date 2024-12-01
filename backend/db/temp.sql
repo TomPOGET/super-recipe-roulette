@@ -15,7 +15,7 @@ CREATE TABLE ADMIN (
 CREATE TABLE RECIPE (
     recipeId INTEGER PRIMARY KEY AUTOINCREMENT,  -- Utilisation d'AUTOINCREMENT en SQLite, au lieu de serial (pgsql)
     name VARCHAR(30),
-    difficulty VARCHAR(10) CHECK (difficulty IN ('EASY', 'MEDIUM', 'HARD')),
+    category VARCHAR(15) CHECK (category IN ('ENTREE', 'PRINCIPAL', 'DESSERT', 'BOISSON', 'AUTRES')),
     instructions VARCHAR(1000),
     status VARCHAR(10) CHECK (status IN ('VALID', 'INVALID')) DEFAULT 'INVALID'
 );
@@ -23,7 +23,6 @@ CREATE TABLE RECIPE (
 CREATE TABLE RECIPE_INGREDIENT (
     recipeId INTEGER, 
     ingredient VARCHAR(50),
-    importance VARCHAR(20),
     quantity FLOAT,
     unit VARCHAR(20),
     FOREIGN KEY (recipeId) REFERENCES RECIPE(recipeId),
