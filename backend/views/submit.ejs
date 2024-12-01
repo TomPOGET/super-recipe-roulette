@@ -33,7 +33,22 @@
         <!-- Ingredients -->
         <div class="form-group">
           <label for="ingredients">Ingrédients<span class="required">*</span></label>
-          <input type="text" id="ingredientInput" placeholder="Ajouter vos ingrédient séparés par des virgules: Ex. Fromage,Thon,...">
+
+            <div id="ingredient1" style="white-space: nowrap;">
+
+              <label for="ingredientName1" >Nom :</label>
+              <input type="text" id="ingredientName1" placeholder="Fromage" style="width: 170px;">
+
+              <label for="ingredientQuantity1">Quantité :</label>
+              <input type="text" id="ingredientQuantity1" placeholder="100" style="width: 70px;">
+
+              <label for="ingredientUnity1">Unité :</label>
+              <input type="text" id="ingredientUnity1" placeholder="ml" style="width: 115px;">
+            
+            </div>
+
+            <button>Ajouter un autre ingrédient</button>
+
         </div>
 
         <!-- Preparation Steps -->
@@ -42,17 +57,7 @@
           <textarea id="preparation" name="preparation" rows="6" placeholder="Décrivez les étapes de préparation, un par ligne" required></textarea>
         </div>
 
-        <!-- Cooking Time -->
-        <div class="form-group">
-          <label for="cookingTime">Temps de Cuisson (minutes)<span class="required">*</span></label>
-          <input type="number" id="cookingTime" name="cookingTime" min="1" placeholder="Ex. 30" required>
-        </div>
 
-        <!-- Serving Size -->
-        <div class="form-group">
-          <label for="servingSize">Nombre de Portions<span class="required">*</span></label>
-          <input type="number" id="servingSize" name="servingSize" min="1" placeholder="Ex. 4" required>
-        </div>
 
         <!-- Category -->
         <div class="form-group">
@@ -63,7 +68,6 @@
             <option value="plats_principaux">Plats Principaux</option>
             <option value="desserts">Desserts</option>
             <option value="boissons">Boissons</option>
-            <option value="accompagnements">Accompagnements</option>
             <option value="autres">Autres</option>
           </select>
         </div>
