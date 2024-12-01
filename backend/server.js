@@ -33,14 +33,14 @@ app.use((req, res, next) => {
 const login = require('./routers/login');
 app.use('/',login);
 
-const search = require('./routers/search');
-app.use('/search',search);
+const recipes = require('./routers/recipes');
+app.use('/recipes',recipes);
 
 const submit = require('./routers/submit');
 app.use('/submit',submit);
 
 const admin = require('./routers/admin');
-app.use('/', admin);
+app.use('/admin', admin);
 
 const router = require('./routers/router');
 app.use('/', router);

@@ -12,6 +12,7 @@ CREATE TABLE ADMIN (
     email VARCHAR(40)
 );
 
+/* Les images des recettes seront stockés dans le serveur (img/recipes)*/
 CREATE TABLE RECIPE (
     recipeId INTEGER PRIMARY KEY AUTOINCREMENT,  -- Utilisation d'AUTOINCREMENT en SQLite, au lieu de serial (pgsql)
     name VARCHAR(30),
