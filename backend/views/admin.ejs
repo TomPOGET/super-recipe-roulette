@@ -17,30 +17,28 @@
     <div class="admin-tabs">
       <button class="tab-button active" onclick="openTab(event, 'pending')">Recettes en Attente</button>
       <button class="tab-button" onclick="openTab(event, 'manage')">Gérer les Recettes</button>
-      <button class="tab-button" onclick="openTab(event, 'add')">Ajouter une Recette</button>
     </div>
 
     <!-- Onglet des Recettes en Attente -->
     <div id="pending" class="tab-content active">
       <h2>Recettes en Attente de Validation</h2>
       <div class="recipe-list">
-        <!-- Données d'exemple pour les recettes en attente -->
-        <div class="recipe-card">
-          <h3>Salade César</h3>
-          <p>Une délicieuse salade avec du poulet, de la laitue et du parmesan.</p>
-          <div class="admin-actions">
-            <button class="approve-button">Approuver</button>
-            <button class="reject-button">Rejeter</button>
+        
+        <% for (recipe of invalidRecipes){ %>
+
+          <div class="recipe-card">
+            <img src="img/recipes/<%=recipe.recipeId%>.png" alt="Salade de Quinoa">
+            <h3><%= recipe.name %></h3>
+            <p><%= recipe.instructions%></p>
+            <div class="admin-actions">
+              <button class="approve-button">Approuver</button>
+              <button class="reject-button">Rejeter</button>
+            </div>
           </div>
-        </div>
-        <div class="recipe-card">
-          <h3>Spaghetti Bolognese</h3>
-          <p>Un plat italien classique avec une sauce riche en viande.</p>
-          <div class="admin-actions">
-            <button class="approve-button">Approuver</button>
-            <button class="reject-button">Rejeter</button>
-          </div>
-        </div>
+
+      <% } %>
+        
+        
       </div>
     </div>
 
@@ -48,60 +46,27 @@
     <div id="manage" class="tab-content">
       <h2>Gérer les Recettes Existantes</h2>
       <div class="recipe-list">
-        <!-- Données d'exemple pour les recettes approuvées -->
-        <div class="recipe-card">
-          <h3>Quiche Lorraine</h3>
-          <p>Une tarte salée traditionnelle française avec du bacon et du fromage.</p>
-          <div class="admin-actions">
-            <button class="edit-button">Modifier</button>
-            <button class="delete-button">Supprimer</button>
+        
+        
+        <% for (recipe of validRecipes){ %>
+
+          <div class="recipe-card">
+            <img src="img/recipes/<%=recipe.recipeId%>.png" alt="Salade de Quinoa">
+            <h3><%= recipe.name %></h3>
+            <p><%= recipe.instructions%></p>
+            <div class="admin-actions">
+              <button class="approve-button">Approuver</button>
+              <button class="reject-button">Rejeter</button>
+            </div>
           </div>
-        </div>
-        <div class="recipe-card">
-          <h3>Soupe à l'oignon</h3>
-          <p>Une soupe française classique avec des oignons caramélisés.</p>
-          <div class="admin-actions">
-            <button class="edit-button">Modifier</button>
-            <button class="delete-button">Supprimer</button>
-          </div>
-        </div>
+
+      <% } %>
+
+
       </div>
     </div>
 
-    <!-- Onglet Ajouter une Nouvelle Recette -->
-    <div id="add" class="tab-content">
-      <h2>Ajouter une Nouvelle Recette</h2>
-      <div class="submission-card">
-        <form id="adminAddRecipeForm">
-          <!-- Titre de la Recette -->
-          <div class="form-group">
-            <label for="recipeTitle">Titre de la Recette<span class="required">*</span></label>
-            <input type="text" id="recipeTitle" name="recipeTitle" required>
-          </div>
-          <!-- Description -->
-          <div class="form-group">
-            <label for="description">Description<span class="required">*</span></label>
-            <textarea id="description" name="description" rows="4" required></textarea>
-          </div>
-          <!-- Ingrédients -->
-          <div class="form-group">
-            <label for="ingredients">Ingrédients<span class="required">*</span></label>
-            <textarea id="ingredients" name="ingredients" rows="6" required></textarea>
-          </div>
-          <!-- Instructions -->
-          <div class="form-group">
-            <label for="instructions">Instructions<span class="required">*</span></label>
-            <textarea id="instructions" name="instructions" rows="6" required></textarea>
-          </div>
-          <!-- Bouton de Soumission -->
-          <div class="form-group">
-            <button type="submit" class="submit-button">Ajouter la Recette</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
+    
   <!-- Pied de Page -->
   <%- include('partials/footer.ejs') %>
 
