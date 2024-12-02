@@ -29,7 +29,13 @@
         <div class="form-group" id="ingredients">
           <label for="ingredients">Ingrédients<span class="required">*</span></label>
 
-          <ingredient v-for="n in ingredientsNumber" v-bind:numero="n" style="padding-bottom:10px;"></ingredient>
+          <ingredient
+          v-for="ingredient in ingredients"
+          :key="ingredient.id"
+          :numero="ingredient.id"
+          @remove="removeIngredientById"
+          style="padding-bottom:10px;"
+          ></ingredient>
           
           <button type="button" class="add-button" v-on:click="addIngredient()">Ajouter un autre ingrédient</button>
         </div>
@@ -80,43 +86,43 @@
 
 
   <script>
+    // Ingredient Component
+    Vue.component("ingredient", {
+      template: `
+        <div :id="'ingredient' + numero" style="white-space: nowrap;">
+          <label :for="'ingredientName' + numero">Nom :</label>
+          <input type="text" :id="'ingredientName' + numero" :name="'ingredients[' + numero + '][name]'" placeholder="Fromage" style="width: 170px;">
 
-    Vue.component("ingredient",{
-        template:`<div :id="'ingredient' + numero" style="white-space: nowrap;">
-                  <label :for="'ingredientName' + numero">Nom :</label>
-                  <input type="text" :id="'ingredientName' + numero" :name="'ingredients[' + (numero-1) + '][name]'" placeholder="Fromage" style="width: 170px;">
+          <label :for="'ingredientQuantity' + numero">Quantité :</label>
+          <input type="text" :id="'ingredientQuantity' + numero" :name="'ingredients[' + numero + '][quantity]'" placeholder="100" style="width: 70px;">
 
-                  <label :for="'ingredientQuantity' + numero">Quantité :</label>
-                  <input type="text" :id="'ingredientQuantity' + numero" :name="'ingredients[' + (numero-1) + '][quantity]'" placeholder="100" style="width: 70px;">
+          <label :for="'ingredientUnit' + numero">Unité :</label>
+          <input type="text" :id="'ingredientUnit' + numero" :name="'ingredients[' + numero + '][unit]'" placeholder="ml" style="width: 115px;">
 
-                  <label :for="'ingredientUnity' + numero">Unité :</label>
-                  <input type="text" :id="'ingredientUnity' + numero" :name="'ingredients[' + (numero-1) + '][unit]'" placeholder="ml" style="width: 115px;">
-                  <button class="add-button">X</button>
-                </div>
-                `,
-        props:['numero']
-                
-    })
-    
+          <button class="add-button" @click="$emit('remove', numero)">X</button>
+        </div>
+      `,
+      props: ['numero'],
+    });
 
+    // Vue Instance
     const app = new Vue({
-
-        el:"#ingredients",
-        data:{ 
-            ingredientsNumber:1
+      el: "#ingredients",
+      data: {
+        ingredients: [{ id: 0 }], // Start with one ingredient
+        nextIngredientId: 1,
+      },
+      methods: {
+        addIngredient() {
+          this.ingredients.push({ id: this.nextIngredientId++ });
         },
-        methods:{
-          addIngredient:function(){
-            console.log("le boutton est cliqué");
-            this.ingredientsNumber ++;
-            console.log(this.ingredientsNumber);
+        removeIngredientById(id) {
+          if (this.ingredients.length > 1) {
+            this.ingredients = this.ingredients.filter(ingredient => ingredient.id !== id);
           }
-        }
-
-    })
-
-    
-
-</script>
+        },
+      },
+    });
+  </script>
 </body>
 </html>
