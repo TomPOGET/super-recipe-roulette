@@ -29,9 +29,9 @@
         <div class="form-group" id="ingredients">
           <label for="ingredients">Ingrédients<span class="required">*</span></label>
 
-          <ingredient v-for="n in ingredientsNumber" v-bind:numero="n"></ingredient>
-            
-          <button type="button" v-on:click="addIngredient()">Ajouter un autre ingrédient</button>
+          <ingredient v-for="n in ingredientsNumber" v-bind:numero="n" style="padding-bottom:10px;"></ingredient>
+          
+          <button type="button" class="add-button" v-on:click="addIngredient()">Ajouter un autre ingrédient</button>
         </div>
             
 
@@ -91,6 +91,7 @@
 
                   <label :for="'ingredientUnity' + numero">Unité :</label>
                   <input type="text" :id="'ingredientUnity' + numero" :name="'ingredients[' + (numero-1) + '][unit]'" placeholder="ml" style="width: 115px;">
+                  <button class="add-button">X</button>
                 </div>
                 `,
         props:['numero']

@@ -706,15 +706,9 @@ h1, h3, h4, h5, h6 {
 
 /* Form Labels */
 .form-group label {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-weight: bold;
   color: #333;
-}
-
-/* Required Field Indicator */
-.required {
-  color: red;
-  margin-left: 2px;
 }
 
 /* Text Inputs and Textareas */
@@ -1107,19 +1101,6 @@ h1, h3, h4, h5, h6 {
   flex-direction: column;
 }
 
-/* Groupe de Formulaire */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-/* Labels du Formulaire */
-.form-group label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
-}
 
 /* Indicateur de Champ Obligatoire */
 .required {
@@ -1127,17 +1108,6 @@ h1, h3, h4, h5, h6 {
   margin-left: 2px;
 }
 
-/* Champs de Texte et Textareas */
-.form-group input[type="text"],
-.form-group textarea {
-  padding: 10px;
-  max-width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1em;
-  font-family: 'Roboto', sans-serif;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
 
 /* Redimensionnement du Textarea */
 .form-group textarea {
