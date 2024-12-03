@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <%- include('partials/header.ejs') %>
-
+  <script src="js/jquery.min.js"></script>
 </head>
 <body>
   <!-- Navbar -->
@@ -73,11 +73,36 @@
     </div>
   </div>
 
+
+
   <% } %>
 <!-- Pied de Page -->
 <%- include('partials/footer.ejs') %>
 
+<script>
+  $(document).ready(function () {
+    $("#search").on("keyup", function () {
+        const query = $(this).val().trim(); // Récupère la valeur du champ de recherche
+        if (query === "") {
+            // Si la recherche est vide, charger toutes les recettes
+            $.get("/recipes/all", function (response) {
+                $(".results-container").html(response); // Insérer toutes les recettes
+            }).fail(function () {
+                $(".results-container").html("<p>Erreur lors du chargement des recettes.</p>");
+            });
+        } else {
+            // Si une recherche est en cours, filtrer les résultats
+            $.get("/recipes/search", { query: query }, function (response) {
+                $(".results-container").html(response);
+            }).fail(function () {
+                $(".results-container").html("<p>Erreur lors de la recherche.</p>");
+            });
+        }
+    });
+});
 
+
+</script>
   
 </body>
 </html>

@@ -67,6 +67,38 @@ router.post('/delete', (req, res) => {
 });
 
 
+router.get('/search', (req, res) => {
+  const query = req.query.query || ''; // Préfixe saisi par l'utilisateur
+  const searchQuery = `
+    SELECT * 
+    FROM RECIPE 
+    WHERE name LIKE ? 
+    AND status = 'VALID'
+  `;
+
+  db.all(searchQuery, [`${query}%`], (err, rows) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Erreur lors de la recherche des recettes.");
+    }
+
+    // Rendre les résultats partiels avec un template EJS
+    res.render('partials/search-results.ejs', { recipes: rows });
+  });
+});
+
+router.get("/all", (req, res) => {
+  const query = "SELECT * FROM RECIPE"; // Requête pour récupérer toutes les recettes
+  db.all(query, [], (err, rows) => {
+      if (err) {
+          return res.status(500).send("Erreur lors de la récupération des recettes.");
+      }
+      res.render("partials/search-results.ejs", { recipes: rows });
+  });
+});
+
+
+
 router.get('/', function (req, res, next) {
 
   if (req.query['recipe']){
