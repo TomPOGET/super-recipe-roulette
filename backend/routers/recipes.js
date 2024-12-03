@@ -12,6 +12,30 @@ const db  = new sqlite3.Database('./db/reciperoulette.sqlite', (err) => {
   });
 
 
+  router.post("/", (req, res) => {
+    const recipeId = req.body.approve;
+
+    if (!recipeId) {
+        return res.status(400).send("ID de la recette non fourni.");
+    }
+
+    const query = `UPDATE RECIPE SET status = 'VALID' WHERE recipeId = ?`;
+
+    db.run(query, [recipeId], function (err) {
+        if (err) {
+            console.error("Erreur lors de la mise à jour de la recette :", err);
+            return res.status(500).send("Erreur interne du serveur.");
+        }
+
+        if (this.changes === 0) {
+            return res.status(404).send("Recette non trouvée.");
+        }
+
+        res.status(200).send("Recette approuvée avec succès !");
+    });
+});
+
+
 router.get('/', function (req, res, next) {
 
   if (req.query['recipe']){

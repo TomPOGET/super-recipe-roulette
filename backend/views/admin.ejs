@@ -4,6 +4,7 @@
   <%- include('partials/header.ejs') %>
   <!-- Styles personnalisés pour le tableau de bord admin -->
   <link rel="stylesheet" href="/css/admin.css">
+  <script src="js/jquery.min.js"></script>
 </head>
 <body>
   <!-- Navbar -->
@@ -31,7 +32,7 @@
             <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
             <p><%= recipe.instructions%></p>
             <div class="admin-actions">
-              <button class="approve-button">Approuver</button>
+              <button class="approve-button" data-id="<%= recipe.recipeId %>">Approuver</button>
               <button class="reject-button">Rejeter</button>
             </div>
           </div>
@@ -72,9 +73,29 @@
   <!-- JavaScript pour les Onglets -->
   <script>
 
+$(document).ready(function () {
+    $(".approve-button").click(function () {
+        // Récupérer l'élément parent du bouton (par exemple, la carte de recette)
+        const recipeCard = $(this).closest(".recipe-card");
+
+        // Récupérer la valeur de data-id
+        const recipeId = $(this).data("id");
+
+        // Envoyer une requête POST avec l'ID
+        $.post("/recipes", { approve: recipeId }, function (response) {
+            // Si la requête réussit, faire une animation pour supprimer le div
+            recipeCard.fadeOut(500, function () {
+                $(this).remove(); // Supprimer le div du DOM après l'animation
+            });
+        }).fail(function (xhr) {
+            alert("Erreur lors de l'approbation : " + xhr.responseText);
+        });
+    });
+});
 
 
-    function openTab(evt, tabName) {
+
+function openTab(evt, tabName) {
       var i, tabcontent, tabbuttons;
       tabcontent = document.getElementsByClassName("tab-content");
       for (i = 0; i < tabcontent.length; i++) {
@@ -87,6 +108,10 @@
       document.getElementById(tabName).classList.add('active');
       evt.currentTarget.classList.add('active');
     }
+
+
+  
+
   </script>
 </body>
 </html>
