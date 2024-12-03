@@ -36,6 +36,37 @@ const db  = new sqlite3.Database('./db/reciperoulette.sqlite', (err) => {
 });
 
 
+router.post('/reject', (req, res) => {
+  const recipeId = req.body.id;
+
+  const deleteQuery = `DELETE FROM RECIPE WHERE recipeId = ?`;
+
+  db.run(deleteQuery, [recipeId], function (err) {
+      if (err) {
+          return res.status(500).send("Erreur lors du rejet de la recette.");
+      }
+
+      res.status(200).send("Recette rejetée avec succès !");
+  });
+});
+
+
+
+router.post('/delete', (req, res) => {
+  const recipeId = req.body.id;
+
+  const deleteQuery = `DELETE FROM RECIPE WHERE recipeId = ?`;
+
+  db.run(deleteQuery, [recipeId], function (err) {
+      if (err) {
+          return res.status(500).send("Erreur lors de la suppression de la recette.");
+      }
+
+      res.status(200).send("Recette supprimée avec succès !");
+  });
+});
+
+
 router.get('/', function (req, res, next) {
 
   if (req.query['recipe']){

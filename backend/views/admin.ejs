@@ -33,7 +33,8 @@
             <p><%= recipe.instructions%></p>
             <div class="admin-actions">
               <button class="approve-button" data-id="<%= recipe.recipeId %>">Approuver</button>
-              <button class="reject-button">Rejeter</button>
+              <button class="reject-button" data-id="<%= recipe.recipeId %>">Rejeter</button>
+
             </div>
           </div>
 
@@ -56,7 +57,7 @@
             <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
             <p><%= recipe.instructions%></p>
             <div class="admin-actions">
-              <button class="delete-button">Supprimer</button>
+              <button class="delete-button" data-id="<%= recipe.recipeId %>">Supprimer</button>
             </div>
           </div>
 
@@ -74,6 +75,7 @@
   <script>
 
 $(document).ready(function () {
+    //approuver une recette
     $(".approve-button").click(function () {
         // Récupérer l'élément parent du bouton (par exemple, la carte de recette)
         const recipeCard = $(this).closest(".recipe-card");
@@ -91,7 +93,56 @@ $(document).ready(function () {
             alert("Erreur lors de l'approbation : " + xhr.responseText);
         });
     });
+
+
+
+    // Gestion du rejet des recettes
+    $(".recipe-list").on("click", ".reject-button", function () {
+        // Récupérer l'élément parent (la carte de recette)
+        const recipeCard = $(this).closest(".recipe-card");
+
+        // Récupérer l'ID de la recette depuis l'attribut data-id
+        const recipeId = $(this).data("id");
+
+        // Envoyer une requête POST pour rejeter la recette
+        $.post("/recipes/reject", { id: recipeId }, function (response) {
+            // Si la requête réussit, faire une animation pour supprimer le div
+            recipeCard.fadeOut(500, function () {
+                $(this).remove(); // Supprimer le div du DOM après l'animation
+            });
+        }).fail(function (xhr) {
+            alert("Erreur lors du rejet : " + xhr.responseText);
+        });
+    });
+
+
+    
+
+   
+    // Gestion de la suppression des recettes
+    $(".recipe-list").on("click", ".delete-button", function () {
+        // Récupérer l'élément parent (la carte de recette)
+        const recipeCard = $(this).closest(".recipe-card");
+
+        // Récupérer l'ID de la recette depuis l'attribut data-id
+        const recipeId = $(this).data("id");
+
+        // Envoyer une requête POST pour supprimer la recette
+        $.post("/recipes/delete", { id: recipeId }, function (response) {
+            // Si la requête réussit, faire une animation pour supprimer le div
+            recipeCard.fadeOut(500, function () {
+                $(this).remove(); // Supprimer le div du DOM après l'animation
+            });
+        }).fail(function (xhr) {
+            alert("Erreur lors de la suppression : " + xhr.responseText);
+        });
+    });
+
+
+
 });
+
+
 
 
 
