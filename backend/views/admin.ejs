@@ -57,6 +57,7 @@
             <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
             <p><%= recipe.instructions%></p>
             <div class="admin-actions">
+              <button class="edit-button">Modifier</button>
               <button class="delete-button" data-id="<%= recipe.recipeId %>">Supprimer</button>
             </div>
           </div>
