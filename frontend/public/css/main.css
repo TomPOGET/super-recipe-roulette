@@ -448,10 +448,12 @@ h1, h3, h4, h5, h6 {
 
 /* Footer */
 .footer {
+
   background-color: rgba(255, 99, 71, 0.9);
   color: white;
   text-align: center;
   padding: 30px 30px 10px ;
+  z-index: 1000;
 }
 .footer p {
   margin: 10px 0;
@@ -857,6 +859,7 @@ h1, h3, h4, h5, h6 {
   display: flex;
   flex-direction: column;
   transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
 }
 
 .search-page .recipe-card:hover {
@@ -875,6 +878,7 @@ h1, h3, h4, h5, h6 {
   margin: 0 15px;
   font-size: 1.3em;
   color: #ff6347;
+  padding: 20px;
 }
 
 .search-page .recipe-card h3 .recipe-link {
@@ -888,30 +892,6 @@ h1, h3, h4, h5, h6 {
   color: #e84393;
 }
 
-.search-page .recipe-rating {
-  display: flex;
-  align-items: center;
-  padding: 0 20px 10px 20px;
-}
-
-.search-page .recipe-rating .fa-star {
-  color: #ffd700; /* Gold color for filled stars */
-  margin-right: 2px;
-}
-
-.search-page .recipe-rating .fa-star.filled {
-  color: #ffd700; /* Gold color for filled stars */
-}
-
-.search-page .recipe-rating .fa-star:not(.filled) {
-  color: #ccc; /* Gray color for empty stars */
-}
-
-.search-page .review-count {
-  margin-left: 20px;
-  font-size: 0.9em;
-  color: #555;
-}
 
 /* ==========================
    Responsive Design pour la Page de Recherche
@@ -1010,7 +990,10 @@ h1, h3, h4, h5, h6 {
 }
 
 /* Carte de Recette */
-.recipe-card {
+.admin-dashboard .recipe-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -1018,9 +1001,25 @@ h1, h3, h4, h5, h6 {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.recipe-card h3 {
+.admin-dashboard .recipe-card img {
+  width: 20%;                /* Prend toute la largeur de la carte */
+  height: 200px;              /* Hauteur fixe pour uniformité */
+  object-fit: cover;          /* Recadre l'image pour couvrir l'espace sans déformer */
+  border-radius: 10px;        /* Coins arrondis pour un effet moderne */
+  margin-bottom: 15px;        /* Espacement en dessous de l'image */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Légère ombre pour la profondeur */
+  transition: transform 0.3s, box-shadow 0.3s; /* Effets de transition pour l'interaction */
+}
+
+.admin-dashboard .recipe-card img:hover {
+  transform: scale(1.05);     /* Légère augmentation de la taille */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée */
+}
+
+.admin-dashboard .recipe-card .recipe-content h3 {
   margin-top: 0;
   color: #ff6347;
+  font-size: 1.3em;
 }
 
 .recipe-card p {
@@ -1173,15 +1172,19 @@ h1, h3, h4, h5, h6 {
   }
 }
 
-/* Styles spécifiques pour la page 404 */
+
 .error-container {
+  flex: 1; /* Fait en sorte que cette section prenne tout l'espace disponible */
+  display: flex;
+  margin: 200px auto; /* Centrer verticalement avec un espacement supérieur */
   max-width: 600px;
-  margin: 100px auto; /* Centrer verticalement avec un espacement supérieur */
   padding: 20px;
+  flex-direction: column;
+  justify-content: center; /* Centre verticalement le contenu de la page */
+  align-items: center;
   background-color: #fff; /* Fond blanc pour contraster */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre pour la profondeur */
   border-radius: 8px;
-  text-align: center; /* Centrer le contenu */
 }
 
 .error-container h1 {

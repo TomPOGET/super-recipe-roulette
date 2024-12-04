@@ -28,13 +28,14 @@
         <% for (recipe of invalidRecipes){ %>
 
           <div class="recipe-card">
-            <img src="img/recipes/<%=recipe.recipeId%>.png" alt="Salade de Quinoa">
-            <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
-            <p><%= recipe.instructions%></p>
-            <div class="admin-actions">
-              <button class="approve-button" data-id="<%= recipe.recipeId %>">Approuver</button>
-              <button class="reject-button" data-id="<%= recipe.recipeId %>">Rejeter</button>
-
+            <img src="img/recipes/<%=recipe.recipeId%>.png" alt="<%= recipe.name %>">
+              <div class="recipe-content">
+                <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
+                <p><%= recipe.instructions%></p>
+                <div class="admin-actions">
+                  <button class="approve-button" data-id="<%= recipe.recipeId %>">Approuver</button>
+                  <button class="reject-button" data-id="<%= recipe.recipeId %>">Rejeter</button>
+                </div>
             </div>
           </div>
 
@@ -53,13 +54,15 @@
         <% for (recipe of validRecipes) { %>
           <div class="recipe-card">
             <img src="img/recipes/<%= recipe.recipeId %>.png" alt="<%= recipe.name %>">
-            <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
-            <p><%= recipe.instructions %></p>
-            <div class="admin-actions">
-              <a href="/admin/edit/<%= recipe.recipeId %>">
-                <button class="edit-button">Modifier</button>
-              </a>
-              <button class="delete-button" data-id="<%= recipe.recipeId %>">Supprimer</button>
+            <div class="recipe-content">
+              <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
+              <p><%= recipe.instructions %></p>
+              <div class="admin-actions">
+                <a href="/admin/edit/<%= recipe.recipeId %>">
+                  <button class="edit-button">Modifier</button>
+                </a>
+                <button class="delete-button" data-id="<%= recipe.recipeId %>">Supprimer</button>
+              </div>
             </div>
           </div>
         <% } %>
