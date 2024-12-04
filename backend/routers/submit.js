@@ -99,4 +99,8 @@ router.post('/', upload.single('recipeImage'), function (req, res) {
   }
 });
 
+router.use('/', function (req, res) {
+	res.render('submit.ejs', {logged: req.session.loggedin});
+});
+
 module.exports = router;
