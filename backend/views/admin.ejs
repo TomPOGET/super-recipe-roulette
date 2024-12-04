@@ -56,7 +56,7 @@
             <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
             <p><%= recipe.instructions %></p>
             <div class="admin-actions">
-              <a href="/recipes/edit/<%= recipe.recipeId %>">
+              <a href="/admin/edit/<%= recipe.recipeId %>">
                 <button class="edit-button">Modifier</button>
               </a>
               <button class="delete-button" data-id="<%= recipe.recipeId %>">Supprimer</button>
@@ -86,7 +86,7 @@ $(document).ready(function () {
         const recipeId = $(this).data("id");
 
         // Envoyer une requête POST avec l'ID
-        $.post("/recipes/approve", { approve: recipeId }, function (response) {
+        $.post("/admin/approve", { approve: recipeId }, function (response) {
             // Si la requête réussit, faire une animation pour supprimer le div
             recipeCard.fadeOut(500, function () {
                 $(this).remove(); // Supprimer le div du DOM après l'animation
@@ -107,7 +107,7 @@ $(document).ready(function () {
         const recipeId = $(this).data("id");
 
         // Envoyer une requête POST pour rejeter la recette
-        $.post("/recipes/reject", { id: recipeId }, function (response) {
+        $.post("/admin/reject", { id: recipeId }, function (response) {
             // Si la requête réussit, faire une animation pour supprimer le div
             recipeCard.fadeOut(500, function () {
                 $(this).remove(); // Supprimer le div du DOM après l'animation
@@ -130,7 +130,7 @@ $(document).ready(function () {
         const recipeId = $(this).data("id");
 
         // Envoyer une requête POST pour supprimer la recette
-        $.post("/recipes/delete", { id: recipeId }, function (response) {
+        $.post("/admin/delete", { id: recipeId }, function (response) {
             // Si la requête réussit, faire une animation pour supprimer le div
             recipeCard.fadeOut(500, function () {
                 $(this).remove(); // Supprimer le div du DOM après l'animation
