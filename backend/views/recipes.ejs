@@ -81,28 +81,33 @@
 
 <script>
   $(document).ready(function () {
+    // Empêcher la soumission du formulaire par défaut (pour gérer "Entrée")
+    $("#search-form").on("submit", function (event) {
+        event.preventDefault(); // Bloque le comportement par défaut de "submit"
+    });
+
+    // Gérer la recherche dynamique à chaque frappe
     $("#search").on("keyup", function () {
-        const query = $(this).val().trim(); // Récupère la valeur du champ de recherche
+        const query = $(this).val().trim(); // Récupère la valeur de la recherche
         if (query === "") {
-            // Si la recherche est vide, charger toutes les recettes
+            // Si le champ est vide, afficher toutes les recettes
             $.get("/recipes/all", function (response) {
-                $(".results-container").html(response); // Insérer toutes les recettes
+                $(".results-container").html(response); // Afficher toutes les recettes
             }).fail(function () {
                 $(".results-container").html("<p>Erreur lors du chargement des recettes.</p>");
             });
         } else {
-            // Si une recherche est en cours, filtrer les résultats
+            // Si un texte est saisi, effectuer une recherche
             $.get("/recipes/search", { query: query }, function (response) {
-                $(".results-container").html(response);
+                $(".results-container").html(response); // Afficher les résultats
             }).fail(function () {
                 $(".results-container").html("<p>Erreur lors de la recherche.</p>");
             });
         }
     });
-});
-
-
+  });
 </script>
+
   
 </body>
 </html>

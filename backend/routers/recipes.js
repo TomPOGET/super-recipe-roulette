@@ -163,13 +163,14 @@ router.post('/edit/:id', (req, res) => {
 router.get('/search', (req, res) => {
   const query = req.query.query || ''; // Préfixe saisi par l'utilisateur
   const searchQuery = `
-    SELECT * 
-    FROM RECIPE 
-    WHERE name LIKE ?
-    AND status = 'VALID'
+    SELECT DISTINCT r.*
+    FROM RECIPE r
+    LEFT JOIN RECIPE_INGREDIENT ri ON r.recipeId = ri.recipeId
+    WHERE (r.name LIKE ? OR ri.ingredient LIKE ?)
+    AND r.status = 'VALID'
   `;
 
-  db.all(searchQuery, [`%${query}%`], (err, rows) => {
+  db.all(searchQuery, [`%${query}%`, `%${query}%`], (err, rows) => {
     if (err) {
       console.error(err);
       return res.status(500).send("Erreur lors de la recherche des recettes.");
