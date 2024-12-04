@@ -1172,3 +1172,47 @@ h1, h3, h4, h5, h6 {
     font-size: 1.8em;
   }
 }
+
+/* Styles spécifiques pour la page 404 */
+.error-container {
+  max-width: 600px;
+  margin: 100px auto; /* Centrer verticalement avec un espacement supérieur */
+  padding: 20px;
+  background-color: #fff; /* Fond blanc pour contraster */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre pour la profondeur */
+  border-radius: 8px;
+  text-align: center; /* Centrer le contenu */
+}
+
+.error-container h1 {
+  font-size: 72px; /* Grand titre pour 404 */
+  color: #ff6b6b; /* Rouge doux pour indiquer une erreur */
+  margin-bottom: 10px;
+}
+
+.error-container p {
+  font-size: 18px;
+  color: #555; /* Gris doux pour un texte descriptif */
+  margin-bottom: 20px;
+}
+
+.error-container img {
+  max-width: 100px; /* Taille maximale pour une icône ou image */
+  margin: 20px 0;
+}
+
+.error-container .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff; /* Bleu pour indiquer une action */
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.error-container .btn:hover {
+  background-color: #0056b3; /* Bleu plus foncé au survol */
+}
