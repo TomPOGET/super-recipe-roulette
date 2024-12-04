@@ -50,19 +50,20 @@
       <div class="recipe-list">
         
         
-        <% for (recipe of validRecipes){ %>
-
+        <% for (recipe of validRecipes) { %>
           <div class="recipe-card">
-            <img src="img/recipes/<%=recipe.recipeId%>.png" alt="Salade de Quinoa">
+            <img src="img/recipes/<%= recipe.recipeId %>.png" alt="<%= recipe.name %>">
             <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
-            <p><%= recipe.instructions%></p>
+            <p><%= recipe.instructions %></p>
             <div class="admin-actions">
-              <button class="edit-button">Modifier</button>
+              <a href="/recipes/edit/<%= recipe.recipeId %>">
+                <button class="edit-button">Modifier</button>
+              </a>
               <button class="delete-button" data-id="<%= recipe.recipeId %>">Supprimer</button>
             </div>
           </div>
-
-      <% } %>
+        <% } %>
+        
 
 
       </div>
@@ -85,7 +86,7 @@ $(document).ready(function () {
         const recipeId = $(this).data("id");
 
         // Envoyer une requête POST avec l'ID
-        $.post("/recipes", { approve: recipeId }, function (response) {
+        $.post("/recipes/approve", { approve: recipeId }, function (response) {
             // Si la requête réussit, faire une animation pour supprimer le div
             recipeCard.fadeOut(500, function () {
                 $(this).remove(); // Supprimer le div du DOM après l'animation

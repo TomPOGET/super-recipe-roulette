@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include('partials/header.ejs') %>
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script src="js/vue.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <%- include('partials/navbar.ejs') %>
+
+  <!-- Banner -->
+  <div class="banner">
+    <h1>Soumettez Votre Recette</h1>
+    <p>Partagez vos délicieuses créations culinaires avec notre communauté!</p>
+  </div>
+
+  <!-- Recipe Submission Form Container -->
+  <div class="submission-container">
+    <div class="submission-card">
+      <h2>Formulaire de Édition</h2>
+
+      <form id="recipeForm" action="/recipes/edit/<%= recipe.recipeId %>" method="POST">
+        <!-- Recipe Title -->
+        <div class="form-group">
+          <label for="recipeTitle">Nom de la Recette<span class="required">*</span></label>
+          <input
+            type="text"
+            id="recipeTitle"
+            name="name"
+            class="form-control"
+            value="<%= recipe.name %>"
+            placeholder="Entrez le titre de la recette"
+            required
+          >
+        </div>
+      
+        <!-- Ingredients -->
+        <div class="form-group" id="ingredients">
+          <label for="ingredients">Ingrédients<span class="required">*</span></label>
+      
+          <% ingredients.forEach((ingredient, index) => { %>
+            <div class="ingredient" style="padding-bottom: 10px;">
+              <label for="ingredientName<%= index %>">Nom :</label>
+              <input
+                type="text"
+                id="ingredientName<%= index %>"
+                name="ingredients[<%= index %>][name]"
+                class="form-control"
+                value="<%= ingredient.ingredient %>"
+                placeholder="Nom de l'ingrédient"
+                style="width: 170px;"
+              >
+      
+              <label for="ingredientQuantity<%= index %>">Quantité :</label>
+              <input
+                type="text"
+                id="ingredientQuantity<%= index %>"
+                name="ingredients[<%= index %>][quantity]"
+                class="form-control"
+                value="<%= ingredient.quantity %>"
+                placeholder="Quantité"
+                style="width: 70px;"
+              >
+      
+              <label for="ingredientUnit<%= index %>">Unité :</label>
+              <input
+                type="text"
+                id="ingredientUnit<%= index %>"
+                name="ingredients[<%= index %>][unit]"
+                class="form-control"
+                value="<%= ingredient.unit %>"
+                placeholder="Unité"
+                style="width: 115px;"
+              >
+            </div>
+          <% }) %>
+      
+        </div>
+      
+        <!-- Preparation Steps -->
+        <div class="form-group">
+          <label for="preparation">Étapes de Préparation<span class="required">*</span></label>
+          <textarea
+            id="preparation"
+            name="instructions"
+            class="form-control"
+            rows="6"
+            placeholder="Décrivez les étapes de préparation"
+            required
+          ><%= recipe.instructions %></textarea>
+        </div>
+      
+        <!-- Category -->
+        <div class="form-group">
+          <label for="category">Catégorie<span class="required">*</span></label>
+          <select
+            id="category"
+            name="category"
+            class="form-control"
+            required
+          >
+            <option value="" disabled>Choisissez une catégorie</option>
+            <option value="ENTREE" <%= recipe.category === "ENTREE" ? "selected" : "" %>>Entrées</option>
+            <option value="PRINCIPAL" <%= recipe.category === "PRINCIPAL" ? "selected" : "" %>>Plats Principaux</option>
+            <option value="DESSERT" <%= recipe.category === "DESSERT" ? "selected" : "" %>>Desserts</option>
+            <option value="BOISSON" <%= recipe.category === "BOISSON" ? "selected" : "" %>>Boissons</option>
+            <option value="AUTRES" <%= recipe.category === "AUTRES" ? "selected" : "" %>>Autres</option>
+          </select>
+        </div>
+      
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button type="submit" class="submit-button">Modifier la Recette</button>
+        </div>
+      </form>
+      
+      
+    </div>
+  </div>
+
+  <!-- Pied de Page -->
+  <%- include('partials/footer.ejs') %>
+
+
+
+
+  <script>
+    // Ingredient Component
+    Vue.component("ingredient", {
+      template: `
+        <div :id="'ingredient' + numero" style="white-space: nowrap;">
+          <label :for="'ingredientName' + numero">Nom :</label>
+          <input type="text" :id="'ingredientName' + numero" :name="'ingredients[' + numero + '][name]'" placeholder="Fromage" style="width: 170px;">
+
+          <label :for="'ingredientQuantity' + numero">Quantité :</label>
+          <input type="text" :id="'ingredientQuantity' + numero" :name="'ingredients[' + numero + '][quantity]'" placeholder="100" style="width: 70px;">
+
+          <label :for="'ingredientUnit' + numero">Unité :</label>
+          <input type="text" :id="'ingredientUnit' + numero" :name="'ingredients[' + numero + '][unit]'" placeholder="ml" style="width: 115px;">
+
+          <button class="add-button" @click="$emit('remove', numero)">X</button>
+        </div>
+      `,
+      props: ['numero'],
+    });
+
+    // Vue Instance
+    const app = new Vue({
+      el: "#ingredients",
+      data: {
+        ingredients: [{ id: 0 }], // Start with one ingredient
+        nextIngredientId: 1,
+      },
+      methods: {
+        addIngredient() {
+          this.ingredients.push({ id: this.nextIngredientId++ });
+        },
+        removeIngredientById(id) {
+          if (this.ingredients.length > 1) {
+            this.ingredients = this.ingredients.filter(ingredient => ingredient.id !== id);
+          }
+        },
+      },
+    });
+  </script>
+</body>
+</html>
