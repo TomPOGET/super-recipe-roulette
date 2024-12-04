@@ -5,6 +5,12 @@ const sqlite3 = require('sqlite3').verbose();
 // add data to req.body (for POST requests)
 router.use(express.urlencoded({ extended: true }));
 
+// var popup = require('popups');
+
+// popup.alert({
+//	content: 'C'est la meeeeeeeeeeeeeerde!'
+// });
+
 // connecting an existing database (handling errors)
 const db  = new sqlite3.Database('./db/reciperoulette.sqlite', (err) => {
 	if (err) {
