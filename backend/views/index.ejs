@@ -17,7 +17,6 @@
   <div class="main-content">
     <!-- Filters on the left -->
     <div class="filter-dropdown">
-      <!-- Filters Button -->
       <button class="filter-button" onclick="toggleFilters()">Filtrer</button>
 
       <!-- Filters Section -->
@@ -50,71 +49,35 @@
         </a>
       </div>
     </div>
-  </div>
 
-  <!-- Recipe of the Day -->
-  <div class="recipe-of-the-day">
-    <!-- Badge "Recette du Jour" -->
-    <div class="badge">
-      <i class="fas fa-star"></i> Recette du Jour
-    </div>
-    <img src="img/image.jpg" alt="Salade de Quinoa">
-    <div class="recipe-details">
-      <h2>Salade de Quinoa</h2>
-      <div class="ingredients">
-        <h3>Ingrédients :</h3>
-        <ul>
-          <li>200g de quinoa</li>
-          <li>1 courgette</li>
-          <li>1 poivron rouge</li>
-          <li>1 aubergine</li>
-          <li>100g de feta</li>
-          <li>2 cuillères à soupe d'huile d'olive</li>
-          <li>Sel et poivre</li>
-        </ul>
+    <!-- Recette du jour -->
+    <div class="recipe-of-the-day">
+      <div class="badge">
+        <i class="fas fa-star"></i> Recette du Jour
       </div>
-      <div class="preparation">
-        <h3>Préparation :</h3>
-        <p>
-          1. Préchauffez le four à 200°C.<br>
-          2. Coupez les légumes en dés, disposez-les sur une plaque, arrosez d'huile d'olive, salez et poivrez.<br>
-          3. Enfournez pendant 25 minutes jusqu'à ce que les légumes soient tendres.<br>
-          4. Pendant ce temps, rincez le quinoa et faites-le cuire selon les instructions du paquet.<br>
-          5. Mélangez le quinoa cuit avec les légumes grillés.<br>
-          6. Ajoutez la feta émiettée et mélangez délicatement.<br>
-          7. Servez tiède ou froid, selon votre préférence.
-        </p>
-      </div>
-    </div>
-  </div>
+      <!-- Affichage de l'image de la recette -->
+      <img src="img/recipes/<%= recipe.recipeId %>.png" alt="<%= recipe.name %>" />
 
-  <!-- Comments Section -->
-  <div class="comments-section">
-    <h2>Commentaires</h2>
-    <div class="comments-container">
-      <div class="comment">
-        <p><strong>Alice</strong></p>
-        <p>Super recette, merci!</p>
-      </div>
-      <div class="comment">
-        <p><strong>Bob</strong></p>
-        <p>J'ai adoré la salade de quinoa.</p>
-      </div>
-      <div class="comment">
-        <p><strong>Charlie</strong></p>
-        <p>Facile à préparer et délicieux!</p>
-      </div>
-      <div class="comment">
-        <p><strong>Diana</strong></p>
-        <p>Une recette saine et savoureuse.</p>
-      </div>
-      <div class="comment">
-        <p><strong>Ethan</strong></p>
-        <p>Parfaite pour un déjeuner léger.</p>
+      <div class="recipe-details">
+        <h2><%= recipe.name %></h2>
+        <div class="category">
+          <strong>Catégorie:</strong> <%= recipe.category %>
+        </div>
+        <div class="ingredients">
+          <h3>Ingrédients :</h3>
+          <ul>
+            <% recipe.ingredients.split(',').forEach(function(ingredient) { %>
+              <li><%= ingredient %></li>
+            <% }); %>
+          </ul>
+        </div>
+        <div class="preparation">
+          <h3>Préparation :</h3>
+          <p><%= recipe.instructions %></p>
+        </div>
       </div>
     </div>
   </div>
-  
 
   <!-- Pied de Page -->
   <%- include('partials/footer.ejs') %>
