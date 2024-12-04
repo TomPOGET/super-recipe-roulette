@@ -120,8 +120,22 @@
           if (this.ingredients.length > 1) {
             this.ingredients = this.ingredients.filter(ingredient => ingredient.id !== id);
           }
-        },
+        }
       },
+    });
+  </script>
+  <script>
+    //Vérification Champs
+    document.getElementById('recipeForm').addEventListener('submit', function(event) {
+      const quantityInputs = document.querySelectorAll('input[name*="[quantity]"]');
+      for (let input of quantityInputs) {
+        const value = input.value.trim();
+        if (value === '' || isNaN(value) || Number(value) <= 0) {
+          alert('Veuillez entrer des quantités valides (nombres positifs) pour tous les ingrédients.');
+          event.preventDefault(); // Empêcher la soumission du formulaire
+          return;
+        }
+      }
     });
   </script>
 </body>
