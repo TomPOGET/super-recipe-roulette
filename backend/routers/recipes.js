@@ -182,7 +182,7 @@ router.get('/search', (req, res) => {
 });
 
 router.get("/all", (req, res) => {
-  const query = "SELECT * FROM RECIPE"; // Requête pour récupérer toutes les recettes
+  const query = "SELECT * FROM RECIPE WHERE status='VALID';"; // Requête pour récupérer toutes les recettes
   db.all(query, [], (err, rows) => {
       if (err) {
           return res.status(500).send("Erreur lors de la récupération des recettes.");
