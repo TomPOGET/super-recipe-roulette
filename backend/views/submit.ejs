@@ -18,7 +18,7 @@
   <div class="submission-container">
     <div class="submission-card">
       <h2>Formulaire de Soumission</h2>
-      <form id="recipeForm" action="/submit" method="POST">
+      <form id="recipeForm" action="/submit" method="POST" enctype="multipart/form-data">
         <!-- Recipe Title -->
         <div class="form-group">
           <label for="recipeTitle">Nom de la Recette<span class="required">*</span></label>
@@ -65,10 +65,10 @@
         <!-- Image Upload, à gerer après (on va l'enregister dans le server) -->
 
         
-        <!-- <div class="form-group">
+        <div class="form-group">
           <label for="recipeImage">Image de la Recette<span class="required">*</span></label>
           <input type="file" id="recipeImage" name="recipeImage" accept="image/*" required>
-        </div> -->
+        </div> 
        
 
         <!-- Submit Button -->

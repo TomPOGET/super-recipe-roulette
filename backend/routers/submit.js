@@ -8,7 +8,7 @@ const path = require('path');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // Chemin du dossier pour enregistrer les images
-    const dir = path.resolve(__dirname, '../frontend/public/img/recipes');
+    const dir = path.resolve(__dirname, '../../frontend/public/img/recipes');
 
     // Vérifier si le répertoire existe, sinon le créer
     if (!fs.existsSync(dir)) {
