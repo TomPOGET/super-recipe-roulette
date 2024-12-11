@@ -892,6 +892,11 @@ h1, h3, h4, h5, h6 {
   color: #e84393;
 }
 
+.recipe-display-container{
+  display: flex;
+  flex: 1;
+  margin: 50px;
+}
 
 /* ==========================
    Responsive Design pour la Page de Recherche

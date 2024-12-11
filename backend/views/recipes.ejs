@@ -15,8 +15,11 @@
   </div>
 
   <% if(specificRecipe){ %>
-
+    <div class="recipe-display-container">
     <div class="recipe-of-the-day">
+      <div class="badge">
+        <i class="fas fa-star"></i> Fiche Recette    
+      </div>
   
       <img src="img/recipes/<%=recipe.recipeId%>.png" alt="Salade de Quinoa">
       <div class="recipe-details">
@@ -44,6 +47,7 @@
           <%= recipe.instructions %>
         </div>
       </div>
+    </div>
     </div>
 
   <% }else{ %>
