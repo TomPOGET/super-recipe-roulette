@@ -21,7 +21,8 @@ const db  = new sqlite3.Database('./db/reciperoulette.sqlite', (err) => {
 
 router.post('/login', function (req, res, next) {
 	let data = req.body;
-    console.log('Tentative de connexion reçue');
+	console.log('Tentative de connexion reçue');
+	console.log(data['username']);
 	if(data['username']!=null && data['username']!="" && data['password']!=null && data['password']!=""){
 		console.log('Champs username et password remplis');
 		db.serialize(() => {

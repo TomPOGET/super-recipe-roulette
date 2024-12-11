@@ -14,7 +14,6 @@ const db  = new sqlite3.Database('./db/reciperoulette.sqlite', (err) => {
 
 //Il manque la photo (après)
 router.post('/', function(req, res) {
-    console.log(req.body);
 
     // Extraction des données du body
     const { name, instructions, category, ingredients } = req.body;

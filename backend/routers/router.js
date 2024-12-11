@@ -40,7 +40,7 @@ router.use('/', function (req, res) {
       return res.status(500).send("Erreur serveur.");
     }
 
-    console.log("Recette récupérée :", row);
+    // console.log("Recette récupérée :", row);
 
     if (row) {
       // Si une recette est trouvée, l'afficher
