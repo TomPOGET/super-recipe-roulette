@@ -23,8 +23,169 @@ function isAuthenticated(req, res, next) {
 // Appliquer le middleware d'authentification à toutes les routes de ce routeur
 router.use(isAuthenticated);
 
-// Route pour afficher le tableau de bord administrateur
 
+router.post("/approve", (req, res) => {
+  const recipeId = req.body.approve;
+
+  if (!recipeId) {
+      return res.status(400).send("ID de la recette non fourni.");
+  }
+
+  const query = `UPDATE RECIPE SET status = 'VALID' WHERE recipeId = ?`;
+
+  db.run(query, [recipeId], function (err) {
+      if (err) {
+          console.error("Erreur lors de la mise à jour de la recette :", err);
+          return res.status(500).send("Erreur interne du serveur.");
+      }
+
+      if (this.changes === 0) {
+          return res.status(404).send("Recette non trouvée.");
+      }
+
+      res.status(200).send("Recette approuvée avec succès !");
+  });
+});
+
+
+const fs = require('fs');
+const path = require('path');
+
+router.post('/reject', (req, res) => {
+    const recipeId = req.body.id;
+
+    // Définir le chemin de l'image associée à la recette
+    const imagePath = path.resolve(__dirname, `../../frontend/public/img/recipes/${recipeId}.png`);
+
+    // Supprimer la recette de la base de données
+    const deleteQuery = `DELETE FROM RECIPE WHERE recipeId = ?`;
+
+    db.run(deleteQuery, [recipeId], function (err) {
+        if (err) {
+            return res.status(500).send("Erreur lors du rejet de la recette.");
+        }
+
+        // Vérifier si l'image existe, puis la supprimer
+        fs.unlink(imagePath, (unlinkErr) => {
+            if (unlinkErr && unlinkErr.code !== 'ENOENT') {
+                console.error("Erreur lors de la suppression de l'image :", unlinkErr);
+                return res.status(500).send("Erreur lors de la suppression de l'image.");
+            }
+
+            res.status(200).send("Recette rejetée avec succès !");
+        });
+    });
+});
+
+
+
+
+router.post('/delete', (req, res) => {
+const recipeId = req.body.id;
+
+const deleteQuery = `DELETE FROM RECIPE WHERE recipeId = ?`;
+
+db.run(deleteQuery, [recipeId], function (err) {
+    if (err) {
+        return res.status(500).send("Erreur lors de la suppression de la recette.");
+    }
+
+    res.status(200).send("Recette supprimée avec succès !");
+});
+});
+
+
+
+router.get('/edit/:id', (req, res) => {
+const recipeId = req.params.id;
+
+// Récupérer les données de la recette depuis la base de données
+const getRecipeQuery = `
+    SELECT * FROM RECIPE WHERE recipeId = ?
+`;
+
+const getIngredientsQuery = `
+    SELECT * FROM RECIPE_INGREDIENT WHERE recipeId = ?
+`;
+
+db.serialize(() => {
+    db.get(getRecipeQuery, [recipeId], (err, recipe) => {
+        if (err) {
+            console.error("Erreur lors de la récupération de la recette :", err.message);
+            return res.status(500).send("Erreur interne.");
+        }
+
+        if (!recipe) {
+            return res.status(404).send("Recette introuvable.");
+        }
+
+        db.all(getIngredientsQuery, [recipeId], (err, ingredients) => {
+            if (err) {
+                console.error("Erreur lors de la récupération des ingrédients :", err.message);
+                return res.status(500).send("Erreur interne.");
+            }
+
+            // Rendre la vue avec les données de la recette et des ingrédients
+            res.render('edit', { recipe, ingredients });
+        });
+    });
+});
+});
+
+
+
+router.post('/edit/:id', (req, res) => {
+const recipeId = req.params.id;
+const { name, instructions, category, ingredients } = req.body;
+
+const updateRecipeQuery = `
+    UPDATE RECIPE
+    SET name = ?, instructions = ?, category = ?
+    WHERE recipeId = ?
+`;
+
+const deleteIngredientsQuery = `
+    DELETE FROM RECIPE_INGREDIENT WHERE recipeId = ?
+`;
+
+const insertIngredientQuery = `
+    INSERT INTO RECIPE_INGREDIENT (recipeId, ingredient, quantity, unit)
+    VALUES (?, ?, ?, ?)
+`;
+
+db.serialize(() => {
+    // Mettre à jour la recette
+    db.run(updateRecipeQuery, [name, instructions, category, recipeId], (err) => {
+        if (err) {
+            console.error("Erreur lors de la mise à jour de la recette :", err.message);
+            return res.status(500).send("Erreur interne.");
+        }
+
+        // Supprimer les ingrédients actuels
+        db.run(deleteIngredientsQuery, [recipeId], (err) => {
+            if (err) {
+                console.error("Erreur lors de la suppression des ingrédients :", err.message);
+                return res.status(500).send("Erreur interne.");
+            }
+
+            // Réinsérer les nouveaux ingrédients
+            ingredients.forEach(ingredient => {
+                const { name, quantity, unit } = ingredient;
+                db.run(insertIngredientQuery, [recipeId, name, quantity, unit], (err) => {
+                    if (err) {
+                        console.error("Erreur lors de l'ajout des ingrédients :", err.message);
+                    }
+                });
+            });
+
+            res.redirect('/'); // Rediriger vers la page principale après modification
+        });
+    });
+});
+});
+
+
+// Route pour afficher le tableau de bord administrateur
 router.get('/', (req, res, next) => {
   // Requêtes pour récupérer les recettes valides et invalides
   const validRecipesQuery = "SELECT * FROM RECIPE WHERE status='VALID'";

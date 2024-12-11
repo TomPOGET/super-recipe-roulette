@@ -28,13 +28,14 @@
         <% for (recipe of invalidRecipes){ %>
 
           <div class="recipe-card">
-            <img src="img/recipes/<%=recipe.recipeId%>.png" alt="Salade de Quinoa">
-            <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
-            <p><%= recipe.instructions%></p>
-            <div class="admin-actions">
-              <button class="approve-button" data-id="<%= recipe.recipeId %>">Approuver</button>
-              <button class="reject-button" data-id="<%= recipe.recipeId %>">Rejeter</button>
-
+            <img src="img/recipes/<%=recipe.recipeId%>.png" alt="<%= recipe.name %>">
+              <div class="recipe-content">
+                <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
+                <p><%= recipe.instructions%></p>
+                <div class="admin-actions">
+                  <button class="approve-button" data-id="<%= recipe.recipeId %>">Approuver</button>
+                  <button class="reject-button" data-id="<%= recipe.recipeId %>">Rejeter</button>
+                </div>
             </div>
           </div>
 
@@ -53,13 +54,15 @@
         <% for (recipe of validRecipes) { %>
           <div class="recipe-card">
             <img src="img/recipes/<%= recipe.recipeId %>.png" alt="<%= recipe.name %>">
-            <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
-            <p><%= recipe.instructions %></p>
-            <div class="admin-actions">
-              <a href="/recipes/edit/<%= recipe.recipeId %>">
-                <button class="edit-button">Modifier</button>
-              </a>
-              <button class="delete-button" data-id="<%= recipe.recipeId %>">Supprimer</button>
+            <div class="recipe-content">
+              <h3><a href="recipes?recipe=<%= recipe.recipeId %>"><%= recipe.name %></a></h3>
+              <p><%= recipe.instructions %></p>
+              <div class="admin-actions">
+                <a href="/admin/edit/<%= recipe.recipeId %>">
+                  <button class="edit-button">Modifier</button>
+                </a>
+                <button class="delete-button" data-id="<%= recipe.recipeId %>">Supprimer</button>
+              </div>
             </div>
           </div>
         <% } %>
@@ -86,7 +89,7 @@ $(document).ready(function () {
         const recipeId = $(this).data("id");
 
         // Envoyer une requête POST avec l'ID
-        $.post("/recipes/approve", { approve: recipeId }, function (response) {
+        $.post("/admin/approve", { approve: recipeId }, function (response) {
             // Si la requête réussit, faire une animation pour supprimer le div
             recipeCard.fadeOut(500, function () {
                 $(this).remove(); // Supprimer le div du DOM après l'animation
@@ -107,7 +110,7 @@ $(document).ready(function () {
         const recipeId = $(this).data("id");
 
         // Envoyer une requête POST pour rejeter la recette
-        $.post("/recipes/reject", { id: recipeId }, function (response) {
+        $.post("/admin/reject", { id: recipeId }, function (response) {
             // Si la requête réussit, faire une animation pour supprimer le div
             recipeCard.fadeOut(500, function () {
                 $(this).remove(); // Supprimer le div du DOM après l'animation
@@ -130,7 +133,7 @@ $(document).ready(function () {
         const recipeId = $(this).data("id");
 
         // Envoyer une requête POST pour supprimer la recette
-        $.post("/recipes/delete", { id: recipeId }, function (response) {
+        $.post("/admin/delete", { id: recipeId }, function (response) {
             // Si la requête réussit, faire une animation pour supprimer le div
             recipeCard.fadeOut(500, function () {
                 $(this).remove(); // Supprimer le div du DOM après l'animation

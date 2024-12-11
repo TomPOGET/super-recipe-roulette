@@ -23,7 +23,7 @@ router.use('/index.html', function (req, res) {
 
 
 // Route pour la page d'accueil avec une recette du jour aléatoire
-router.use('/', function (req, res) {
+router.get('/', function (req, res) {
   const query = `
     SELECT r.recipeId, r.name, r.instructions, r.category, 
            GROUP_CONCAT(i.ingredient || ' (' || i.quantity || ' ' || i.unit || ')') AS ingredients

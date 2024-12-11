@@ -45,6 +45,17 @@ app.use('/admin', admin);
 const router = require('./routers/router');
 app.use('/', router);
 
+// Middleware 404 (après toutes les routes définies)
+app.use((req, res) => {
+	res.status(404).render('404.ejs'); // Rendu de la page 404
+});
+
+// Middleware pour les erreurs internes
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).send('Erreur interne du serveur.');
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

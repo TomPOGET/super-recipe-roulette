@@ -18,7 +18,7 @@
   <div class="submission-container">
     <div class="submission-card">
       <h2>Formulaire de Soumission</h2>
-      <form id="recipeForm" action="/submit" method="POST">
+      <form id="recipeForm" action="/submit" method="POST" enctype="multipart/form-data">
         <!-- Recipe Title -->
         <div class="form-group">
           <label for="recipeTitle">Nom de la Recette<span class="required">*</span></label>
@@ -64,12 +64,12 @@
 
         <!-- Image Upload, à gerer après (on va l'enregister dans le server) -->
 
-        <!--
+        
         <div class="form-group">
           <label for="recipeImage">Image de la Recette<span class="required">*</span></label>
           <input type="file" id="recipeImage" name="recipeImage" accept="image/*" required>
-        </div>
-        -->
+        </div> 
+       
 
         <!-- Submit Button -->
         <div class="form-group">
@@ -91,13 +91,13 @@
       template: `
         <div :id="'ingredient' + numero" style="white-space: nowrap;">
           <label :for="'ingredientName' + numero">Nom :</label>
-          <input type="text" :id="'ingredientName' + numero" :name="'ingredients[' + numero + '][name]'" placeholder="Fromage" style="width: 170px;">
+          <input type="text" :id="'ingredientName' + numero" :name="'ingredients[' + numero + '][name]'" placeholder="Fromage" style="width: 170px;" required>
 
           <label :for="'ingredientQuantity' + numero">Quantité :</label>
-          <input type="text" :id="'ingredientQuantity' + numero" :name="'ingredients[' + numero + '][quantity]'" placeholder="100" style="width: 70px;">
+          <input type="text" :id="'ingredientQuantity' + numero" :name="'ingredients[' + numero + '][quantity]'" placeholder="100" style="width: 70px;" required>
 
           <label :for="'ingredientUnit' + numero">Unité :</label>
-          <input type="text" :id="'ingredientUnit' + numero" :name="'ingredients[' + numero + '][unit]'" placeholder="ml" style="width: 115px;">
+          <input type="text" :id="'ingredientUnit' + numero" :name="'ingredients[' + numero + '][unit]'" placeholder="ml" style="width: 115px;" required>
 
           <button class="add-button" @click="$emit('remove', numero)">X</button>
         </div>
@@ -120,8 +120,22 @@
           if (this.ingredients.length > 1) {
             this.ingredients = this.ingredients.filter(ingredient => ingredient.id !== id);
           }
-        },
+        }
       },
+    });
+  </script>
+  <script>
+    //Vérification Champs
+    document.getElementById('recipeForm').addEventListener('submit', function(event) {
+      const quantityInputs = document.querySelectorAll('input[name*="[quantity]"]');
+      for (let input of quantityInputs) {
+        const value = input.value.trim();
+        if (value === '' || isNaN(value) || Number(value) <= 0) {
+          alert('Veuillez entrer des quantités valides (nombres positifs) pour tous les ingrédients.');
+          event.preventDefault(); // Empêcher la soumission du formulaire
+          return;
+        }
+      }
     });
   </script>
 </body>

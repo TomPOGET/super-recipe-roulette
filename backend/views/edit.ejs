@@ -12,16 +12,16 @@
 
   <!-- Banner -->
   <div class="banner">
-    <h1>Soumettez Votre Recette</h1>
+    <h1>Modifier Votre Recette</h1>
     <p>Partagez vos délicieuses créations culinaires avec notre communauté!</p>
   </div>
 
   <!-- Recipe Submission Form Container -->
   <div class="submission-container">
     <div class="submission-card">
-      <h2>Formulaire de Édition</h2>
+      <h2>Formulaire d'édition</h2>
 
-      <form id="recipeForm" action="/recipes/edit/<%= recipe.recipeId %>" method="POST">
+      <form id="recipeForm" action="/admin/edit/<%= recipe.recipeId %>" method="POST">
         <!-- Recipe Title -->
         <div class="form-group">
           <label for="recipeTitle">Nom de la Recette<span class="required">*</span></label>

@@ -163,13 +163,14 @@ router.post('/edit/:id', (req, res) => {
 router.get('/search', (req, res) => {
   const query = req.query.query || ''; // Préfixe saisi par l'utilisateur
   const searchQuery = `
-    SELECT * 
-    FROM RECIPE 
-    WHERE name LIKE ?
-    AND status = 'VALID'
+    SELECT DISTINCT r.*
+    FROM RECIPE r
+    LEFT JOIN RECIPE_INGREDIENT ri ON r.recipeId = ri.recipeId
+    WHERE (r.name LIKE ? OR ri.ingredient LIKE ?)
+    AND r.status = 'VALID'
   `;
 
-  db.all(searchQuery, [`%${query}%`], (err, rows) => {
+  db.all(searchQuery, [`%${query}%`, `%${query}%`], (err, rows) => {
     if (err) {
       console.error(err);
       return res.status(500).send("Erreur lors de la recherche des recettes.");
@@ -289,7 +290,7 @@ router.get("/search/get-valid-recipes", (req, res, next) => {
 });
 
 router.get("/all", (req, res) => {
-  const query = "SELECT * FROM RECIPE"; // Requête pour récupérer toutes les recettes
+  const query = "SELECT * FROM RECIPE WHERE status='VALID';"; // Requête pour récupérer toutes les recettes
   db.all(query, [], (err, rows) => {
       if (err) {
           return res.status(500).send("Erreur lors de la récupération des recettes.");
