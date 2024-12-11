@@ -90,8 +90,8 @@ router.post('/', upload.single('recipeImage'), function (req, res) {
           }
         });
 
-        // Répondre avec un message de succès
-        res.status(200).send("Recette et ingrédients ajoutés avec succès !");
+        
+        res.status(200).redirect('/');
       });
     });
   } else {

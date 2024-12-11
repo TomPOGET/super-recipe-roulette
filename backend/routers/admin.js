@@ -48,19 +48,35 @@ router.post("/approve", (req, res) => {
 });
 
 
+const fs = require('fs');
+const path = require('path');
+
 router.post('/reject', (req, res) => {
-const recipeId = req.body.id;
+    const recipeId = req.body.id;
 
-const deleteQuery = `DELETE FROM RECIPE WHERE recipeId = ?`;
+    // Définir le chemin de l'image associée à la recette
+    const imagePath = path.resolve(__dirname, `../../frontend/public/img/recipes/${recipeId}.png`);
 
-db.run(deleteQuery, [recipeId], function (err) {
-    if (err) {
-        return res.status(500).send("Erreur lors du rejet de la recette.");
-    }
+    // Supprimer la recette de la base de données
+    const deleteQuery = `DELETE FROM RECIPE WHERE recipeId = ?`;
 
-    res.status(200).send("Recette rejetée avec succès !");
+    db.run(deleteQuery, [recipeId], function (err) {
+        if (err) {
+            return res.status(500).send("Erreur lors du rejet de la recette.");
+        }
+
+        // Vérifier si l'image existe, puis la supprimer
+        fs.unlink(imagePath, (unlinkErr) => {
+            if (unlinkErr && unlinkErr.code !== 'ENOENT') {
+                console.error("Erreur lors de la suppression de l'image :", unlinkErr);
+                return res.status(500).send("Erreur lors de la suppression de l'image.");
+            }
+
+            res.status(200).send("Recette rejetée avec succès !");
+        });
+    });
 });
-});
+
 
 
 
