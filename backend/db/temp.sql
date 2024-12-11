@@ -236,11 +236,11 @@ VALUES ("Mousse au chocolat", "DESSERT", "Faire fondre du chocolat, ajouter des 
 
 -- Limonade maison
 INSERT INTO RECIPE (name, category, instructions, status)
-VALUES ("Limonade maison", "BOISSON", "Mélanger du jus de citron, du sucre, de l'eau et des glaçons pour une limonade fraîche.", "VALID");
+VALUES ("Limonade maison", "BOISSON", "Mélanger du jus de citron, du sucre, de l'eau et des glaçons pour une limonade fraîche.", "INVALID");
 
 -- Curry de légumes
 INSERT INTO RECIPE (name, category, instructions, status)
-VALUES ("Curry de légumes", "PRINCIPAL", "Faire mijoter des légumes dans une sauce curry à base de lait de coco et d'épices.", "VALID");
+VALUES ("Curry de légumes", "PRINCIPAL", "Faire mijoter des légumes dans une sauce curry à base de lait de coco et d'épices.", "INVALID");
 
 -- Crêpes
 INSERT INTO RECIPE (name, category, instructions, status)
@@ -256,7 +256,7 @@ VALUES ("Ratatouille", "PRINCIPAL", "Faire mijoter des courgettes, aubergines, p
 
 -- Bruschetta
 INSERT INTO RECIPE (name, category, instructions, status)
-VALUES ("Bruschetta", "ENTREE", "Griller des tranches de pain, ajouter des tomates hachées, de l'ail, du basilic et un filet d'huile d'olive.", "VALID");
+VALUES ("Bruschetta", "ENTREE", "Griller des tranches de pain, ajouter des tomates hachées, de l'ail, du basilic et un filet d'huile d'olive.", "INVALID");
 
 -- Brownies
 INSERT INTO RECIPE (name, category, instructions, status)
