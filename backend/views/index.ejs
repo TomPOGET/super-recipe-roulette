@@ -24,6 +24,7 @@
         <h2>Ajouter un ingrédient</h2>
         <div class="filter-input-group">
           <input type="text" id="newIngredient" placeholder="Entrez un ingrédient" class="filter-input"/>
+					<div id="autocompletion-results"></div>
           <button onclick="addIngredient()" class="add-button"> + </button>
         </div>
         <div class="tags-container" id="tagsContainer">
@@ -84,5 +85,70 @@
 
   <!-- Main JavaScript -->
   <script src="js/main.js"></script>
+	<script src="js/jquery.min.js"></script>
+
+	<script>
+		var selectedResult = -1,
+				previousRequest,
+				previousValue = document.getElementById('newIngredient').value;
+		
+		function getIngredients() {
+			displayResults($.get('recipes/search/ingredient', { ingredient: document.getElementById('newIngredient').value }));
+		}
+		
+		function displayResults(response) {
+			document.getElementById('autocompletion-results').style.display = response.length ? 'block' : 'none';
+				if (response.length) {
+						response = response.split('|');
+						var responseLen = response.length;
+						document.getElementById('autocompletion-results').innerHTML = '';
+						for (var i = 0, div ; i < responseLen ; i++) {
+								div = document.getElementById('autocompletion-results').appendChild(document.createElement('div'));
+								div.innerHTML = response[i];
+								div.addEventListener('click', function(e) {
+										chooseResult(e.target);
+								});
+						}
+				}
+		}
+		
+		function chooseResult(result) {
+				document.getElementById('newIngredient').value = previousValue = result.innerHTML;
+				document.getElementById('autocompletion-results').style.display = 'none';
+				result.className = '';
+				selectedResult = -1;
+				document.getElementById('newIngredient').focus();
+		}
+
+		$("#newIngredient").on('keydown', function(e) {
+				var divs = document.getElementById('autocompletion-results').getElementsByTagName('div');
+				if (e.keyCode == 38 && selectedResult > -1) {
+						divs[selectedResult--].className = '';
+						if (selectedResult > -1) {
+								divs[selectedResult].className = 'result_focus';
+						}
+				}
+				else if (e.keyCode == 40 && selectedResult < divs.length - 1) {
+						document.getElementById('autocompletion-results').style.display = 'block';
+						if (selectedResult > -1) {
+								divs[selectedResult].className = '';
+						}
+						divs[++selectedResult].className = 'result_focus';
+				}
+				else if (e.keyCode == 13 && selectedResult > -1) {
+						chooseResult(divs[selectedResult]);
+				}
+				else if (document.getElementById('newIngredient').value != previousValue) {
+						console.log("IN");
+						previousValue = document.getElementById('newIngredient').value;
+						if (previousRequest && previousRequest.readyState < XMLHttpRequest.DONE) {
+								previousRequest.abort();
+						}
+						previousRequest = getIngredients();
+						selectedResult = -1;
+				}
+				}
+		);
+	</script>
 </body>
 </html>

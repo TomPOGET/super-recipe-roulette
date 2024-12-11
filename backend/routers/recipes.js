@@ -181,6 +181,114 @@ router.get('/search', (req, res) => {
   });
 });
 
+router.get("/search/ingredient", (req, res) => {
+	let ingredient = req.query['ingredient']+'%';
+  const statement = db.prepare("SELECT * FROM RECIPE_INGREDIENT WHERE ingredient LIKE ?;");
+	statement.all([ingredient], (err, response) => {
+		if(err){
+			console.log(err);
+			next(err);
+		} else {
+			if(response) {
+				res.send(response);
+			} else {
+				console.log("No result");
+			}
+		}
+		statement.finalize();
+		});
+});
+
+router.get("/search/get-valid-recipes", (req, res, next) => {
+	console.log(req.query['indispensables']);
+	var request = `SELECT DISTINCT r1.name, r1.recipeId FROM RECIPE r1, (SELECT recipeId FROM RECIPE_INGREDIENT `;
+	if (req.query['indispensables'] && req.query['indispensables'].length > 1) {
+		for (let i = 0; i < req.query['indispensables'].length; i++) {
+			request += `INTERSECT SELECT recipeId FROM RECIPE_INGREDIENT WHERE ingredient="`
+			request += req.query['indispensables'][i]+ '" ';
+		};
+	}
+	else {
+		if (req.query['indispensables']) {
+			request += `INTERSECT SELECT recipeId FROM RECIPE_INGREDIENT WHERE ingredient="`
+			request += req.query['indispensables']+ '" ';
+			if (req.query['facultatifs'] && req.query['facultatifs'].length >= 0) {
+				request += ` `
+			}
+		}
+	};
+	if (req.query['facultatifs'] && req.query['facultatifs'].length > 1) {
+		for (let i = 0; i < req.query['facultatifs'].length; i++) {
+			request += `INTERSECT SELECT recipeId FROM RECIPE_INGREDIENT WHERE ingredient="`
+			request += req.query['facultatifs'][i]+ '" ';
+		};
+	}
+	else {
+		if (req.query['facultatifs']) {
+			request += `INTERSECT SELECT recipeId FROM RECIPE_INGREDIENT WHERE ingredient="`
+			request += req.query['facultatifs']+ '" ';
+		}
+	};
+	request += `) r2 WHERE r1.recipeId = r2.recipeId;`;
+
+	console.log(request);
+
+  const statement = db.prepare(request);
+	statement.all([], (err, response) => {
+		if(err) {
+			console.log(err);
+			next(err);
+		} else {
+			if (response && response.length > 0) {
+				var reply = '';
+				for (let i = 0; i < response.length; i++) {
+					reply += response[i].name + '£' + response[i].recipeId;
+					if (i < response.length -1) reply += '$';
+				};
+				console.log(reply);
+				res.send(reply);
+			} else {
+				var request = `SELECT r1.name, r1.recipeId FROM RECIPE r1, (SELECT recipeId FROM RECIPE_INGREDIENT `;
+				if (req.query['indispensables'] && req.query['indispensables'].length > 1) {
+					for (let i = 0; i < req.query['indispensables'].length; i++) {
+						request += ` INTERSECT SELECT recipeId FROM RECIPE_INGREDIENT WHERE ingredient="`
+						request += req.query['indispensables'][i]+ '" ';
+					};
+				}
+				else {
+					if (req.query['indispensables']) {
+						request += `INTERSECT SELECT recipeId FROM RECIPE_INGREDIENT WHERE ingredient="`
+						request += req.query['indispensables']+ '" ';
+					}
+				};
+				request += `) r2 WHERE r1.recipeId = r2.recipeId;`;
+
+				const statement2 = db.prepare(request);
+				statement2.all([], (err, response) => {
+					if(err){
+						console.log(err);
+						next(err);
+					} else {
+						if(response) {
+							var reply = '';
+							for (let i = 0; i < response.length; i++) {
+								reply += response[i].name + '£' + response[i].recipeId;
+								if (i < response.length -1) reply += '$';
+							};
+							console.log(reply);
+							res.send(reply);
+						} else {
+							console.log("No result");
+						};
+					}
+					statement2.finalize();
+				});
+			};
+		}
+		statement.finalize();
+	});
+});
+
 router.get("/all", (req, res) => {
   const query = "SELECT * FROM RECIPE WHERE status='VALID';"; // Requête pour récupérer toutes les recettes
   db.all(query, [], (err, rows) => {

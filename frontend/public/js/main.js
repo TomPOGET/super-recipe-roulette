@@ -1,3 +1,7 @@
+var script = document.createElement('script');
+script.src = '/js/jquery.min.js';
+document.getElementsByTagName('head')[0].appendChild(script);
+
 // Variables
 let showFilters = false;
 const newIngredientInput = document.getElementById('newIngredient');
@@ -17,14 +21,7 @@ let originalSegments = [
   { color: 'beige', imageSrc: 'img/image4.png' },
   { color: '#ff6347', imageSrc: 'img/image.png' }
 ];
-let recipes = [
-  { name: 'Salade César', ingredients: ['Laitue', 'Poulet', 'Fromage'] },
-  { name: 'Spaghetti Bolognese', ingredients: ['Spaghetti', 'Bœuf haché', 'Tomates'] },
-  { name: 'Poulet Curry', ingredients: ['Poulet', 'Curry', 'Lait de coco'] },
-  { name: 'Sushi', ingredients: ['Riz', 'Poisson', 'Algues'] },
-  { name: 'Pizza Margherita', ingredients: ['Tomates', 'Fromage', 'Basilic'] },
-  { name: 'Tacos', ingredients: ['Tortillas', 'Bœuf', 'Laitue'] }
-];
+
 let segments = [...originalSegments];
 let startAngle = 0;
 let arc = Math.PI / (segments.length / 2);
@@ -151,41 +148,34 @@ function spin() {
   if (isSpinning) return;
 
   // Filter recipes based on ingredients
-  const indispensable = prioritizedIngredients.filter(i => i.indispensable).map(i => i.name.toLowerCase());
-  const facultatifs = prioritizedIngredients.filter(i => !i.indispensable).map(i => i.name.toLowerCase());
+  const indispensables = prioritizedIngredients.filter(i => i.indispensables).map(i => i.name.charAt(0).toUpperCase() + i.name.slice(1));
+  const facultatifs = prioritizedIngredients.filter(i => !i.indispensables).map(i => i.name.charAt(0).toUpperCase() + i.name.slice(1));
 
-  const filteredRecipes = recipes.filter(recipe => {
-    const ingredients = recipe.ingredients.map(ing => ing.toLowerCase());
-    const hasIndispensable = indispensable.every(ing => ingredients.includes(ing));
-    return hasIndispensable;
-  });
+	var filteredRecipes;
+	$.get('/recipes/search/get-valid-recipes', { indispensables : indispensables, facultatifs : facultatifs }, function(response) {
+		filteredRecipes = response.split('$');
 
-  if (filteredRecipes.length === 0) {
-    alert('Aucune recette ne correspond aux ingrédients indispensables sélectionnés.');
-    return;
-  }
+		if (filteredRecipes.length === 0) {
+			alert('Aucune recette ne correspond aux ingrédients sélectionnés.');
+			return;
+		}
+		else {
+			for (let i = 0; i < filteredRecipes.length; i++) {
+				filteredRecipes[i] = { name : filteredRecipes[i].split('£')[0], id : filteredRecipes[i].split('£')[1]}
+			}
+		}
 
-  const finalRecipes = facultatifs.length > 0
-    ? filteredRecipes.filter(recipe => {
-        const ingredients = recipe.ingredients.map(ing => ing.toLowerCase());
-        return facultatifs.some(ing => ingredients.includes(ing));
-      })
-    : filteredRecipes;
+		console.log("Processed");
+		console.log(filteredRecipes);
 
-  if (finalRecipes.length === 0) {
-    alert('Aucun ingrédient facultatif ne correspond, mais les recettes basées sur les ingrédients indispensables seront affichées.');
-    selectedRecipes = filteredRecipes;
-  } else {
-    selectedRecipes = finalRecipes;
-  }
-
-  // Spin settings
-  isSpinning = true;
-  selectedRecipe = null;
-  spinAngleStart = Math.random() * 10 + 10;
-  spinTime = 0;
-  spinTimeTotal = Math.random() * 6000 + 9000; // Spin for 6-9 seconds
-  rotateWheel(selectedRecipes);
+		// Spin settings
+		isSpinning = true;
+		selectedRecipe = null;
+		spinAngleStart = Math.random() * 10 + 10;
+		spinTime = 0;
+		spinTimeTotal = Math.random() * 6000 + 9000; // Spin for 6-9 seconds
+		rotateWheel(filteredRecipes);
+	});
 }
 
 // Rotate the wheel
@@ -206,11 +196,16 @@ function stopRotateWheel(filteredRecipes) {
   isSpinning = false;
 
   // Select a random recipe from the filtered recipe list
+
+	console.log(filteredRecipes);
+
   selectedRecipe = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
 
+	console.log(selectedRecipe);
+
   // Display selected recipe
-  selectedRecipeName.textContent = selectedRecipe.name;
-  selectedRecipeLink.href = '#'; // Update with actual link if available
+  selectedRecipeName.textContent = selectedRecipe['name'];
+  selectedRecipeLink.href = '/recipes?recipe='+selectedRecipe['id']; // Update with actual link if available
   selectedRecipeBox.style.display = 'block';
 }
 
@@ -227,4 +222,3 @@ document.addEventListener('DOMContentLoaded', () => {
     drawRouletteWheel();
   });
 });
-
